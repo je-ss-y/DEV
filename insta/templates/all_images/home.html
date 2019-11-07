@@ -1,0 +1,45 @@
+{%extends 'all_images/base.html'%}
+{% load bootstrap3 %}
+{% load static%}
+{% block content %} 
+{{ block.super}}
+
+<div class='container'>
+        <div class="row">
+                <div class="card" style="width:50%;margin-left: 30%">
+                        {% for image in images %}
+                        <div class="card">
+                                <a href="{% url 'profile' image.user.id %}">
+                                        <img src="{{image.profile.profile_photo.url}}" class="img-circle" style="width:10%; height:auto" alt=""/> {{image.user.username}}</a>
+                                <hr>
+                        </div>
+                        <div class="card-body ">
+                                        
+                                <h5><a href="{% url 'image' image.id %}">{{image.title}}</a></h5>
+                                <p>{{image.content}}</p>
+                                <hr>
+                        
+                        </div>           
+                        <div class="card-body ">
+                                {% for comment in comments %}
+                                {% if comment.image_id == image.id%}
+                                <h5><strong>{{comment.user.username}}</strong> {{comment.comment}}</h5>
+                                <hr>
+                
+                                {% endif %}
+                                {% endfor %}
+                                
+                        </div>
+                        {% for com in i.comment_set.all %}
+                        <span><p><strong>{{current_user.username}}:</strong>{{com.comment}}</p></span>
+                </div>
+                {% endfor %}
+                        
+                {% empty %}
+                        <div class="row">
+                                <h2 class="text-center">There Are No Images</h2>
+                        </div>
+                {% endfor %}
+        </div>
+</div> 
+{% endblock %}

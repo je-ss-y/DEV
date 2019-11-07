@@ -1,0 +1,67 @@
+{%extends 'all_images/base.html'%}
+{% load bootstrap3 %}
+ {% load staticfiles %}
+{% block content %}
+<div class="container">
+  {% if credentials%}
+  {%for credential in credentials%}
+    <div class="row" style="padding-bottom:20px">
+      <div class="col-md-6">
+        <img class="center-block img-responsive img-circle" src="{{credential.profile_photo.url}}" alt="" style="width:340px; height:340px;margin-top: 20%;">
+      </div>
+      <div class="col-md-6">
+        <h2><strong>Personal Information</strong></h2>
+        <h2>Name:{{credential.user.username}}</h2>
+        <h3><a href="{{credential.linkedin}}}">Linkedin</a></h3>
+        <h3><a href="{{credential.linkedin}}}">GitHub</a></h3>
+        <h2><strong>{{credential.experience}}</strong></h2>
+        <h2><strong>{{credential.contacts}}</strong></h2>
+        <h2><strong>{{credential.level}} developer</strong></h2>
+        <h4>{{credential.bio}}</h4>
+        {%if credential.user.id == user.id%}
+           <a class="btn btn-default btn-lg" href="{% url 'update_profile' %}">
+               <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Edit Profile
+             </a>
+         {% else %}
+                
+         {%endif%}
+      </div>
+    </div>
+  {% endfor %}
+  {%else%}
+      <div class="col-md-4">
+       
+      </div>
+      <div class="col-md-8">
+        <h2><strong>{{user}}</strong></h2>
+       
+        <h4>An Awesome Bio Will Appear Here</h4>
+        <a class="btn btn-sm btn-primary" href="{% url 'update_profile' %}"> Update Profile</a>
+      </div>
+            {%if images%}
+              {% for image in images%}
+          <div class="col-md-4">                
+                <div class="hovereffect thumbnail">
+                        <h3>{{image.title}}</h3>
+                        <p>{{image.description}}</p>
+              </div>
+          </div>
+              {%endfor%}
+        {%else%}
+    </div>
+  {%endif%}
+<hr>    
+<div class="row">
+   <div class="container">
+   
+     {%if credential.user.id == user.id%}
+         <h3 class="text-center">You havent posted any images yet. Get started by posting one <a href="{% url 'new-image' %}">here</a></h3>
+     {%else%}
+       <h3 class="text-center">This user hasn't created any posts yet.</h3>
+     {%endif%}
+   {%endif%}
+  
+   </div>
+ </div>
+</div>
+{%endblock%}
